@@ -54,12 +54,12 @@ save the data frame to db
 '''
 def process(*, filter_wiki_csv_file: str, movies_metadata_file: str, local_data_path: str, rpt_table_name: str):
 
-    print('File path',local_data_path + movies_metadata_file)
+    #print('File path',local_data_path + movies_metadata_file)
     movies_metadata = pd.read_csv(local_data_path + movies_metadata_file, dtype='unicode')
     mv_df = cleanUpAndCreateMoviesDataFrame(movies_metadata, reqd_col_list)
     mv_df.loc[:, 'ratio'] = mv_df.apply(lambda x: calculateRatio(x['budget'], x['revenue']), axis=1)
     #Find the 1000 ratio rows
-    merged_ratio_df = mv_df.nlargest(2, 'ratio')
+    merged_ratio_df = mv_df.nlargest(1000, 'ratio')
 
     #Extract the datafrom wiki dump
     title_df = extractWikiFilterdDump(local_data_path + filter_wiki_csv_file)

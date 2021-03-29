@@ -15,7 +15,7 @@ class DbConnection(object):
         self.password = os.getenv("POSTGRES_PASSWORD",'postgres')
         self.db = os.getenv("POSTGRES_DB", 'postgres')
         self.port = os.getenv("POSTGRES_PORT", '5432')
-        print(f'postgresql://{self.username}:{self.password}@postgres_local:{self.port}/{self.db}')
+        #print(f'postgresql://{self.username}:{self.password}@postgres_local:{self.port}/{self.db}')
         self.engine = create_engine(f'postgresql://{self.username}:{self.password}@postgres_local:5432/{self.db}')
 
     def saveDfToTable(self, df, table):

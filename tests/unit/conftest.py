@@ -1,7 +1,7 @@
 from pathlib import Path
 import pytest
 from dateutil.parser import parse
-from airflow_jobs.models import DagBag, DAG, TaskInstance, Variable
+from airflow.models import DagBag, DAG, TaskInstance, Variable
 from json import load
 
 @pytest.fixture(scope='session')
