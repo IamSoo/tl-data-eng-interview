@@ -7,6 +7,10 @@ this assignment are:
 * Transformation(Processing): *Data will be huge so good language, a good tool with efficient libraries has to be used.*
 * Storage: *The dump and csv files are pretty big a good approach should be taken to store and process them .*
 
+Expected problems
+- The xml file is a compressed file, download will take time, also processing a xml file is a memory intensive process.
+- The movies metadata cant be downloaded directly. Its part of zip and there is no direct link to download.
+
 ## The Design
 The problem defined above is a similar challenge that the many applications are facing to tackle increasing amount of data, transformation
 and processing. The approach would be to build a pipeline completely using cloud solutions like a cloud storage, a cloud hosted airflow , serverless db and any BI tool.
@@ -32,11 +36,12 @@ Python: A programming language, quite popular for data analytics https://www.pyt
 * Python : Easy to use scripting language with different libs for big data analysis.
 * Docker : Helps to containerize everything so that apps can be scaled, reproduced and easily deployed on dev, test and prod.
 * Postgre : Open source db which cab be easily scaled.
-* Pytest : Pytest is used for the unit testing,
+* Pytest : Pytest is used for the unit testing.
 
 ## The Implementation & Steps to Run
 * Airflow is the heart of the processing in our case.
-* It downloads the xml and csv files.
+* It orchestrates everything.
+* Downloads the xml and csv files.
 * Initiates the processing.
 * Also inserts the data into db.
 
