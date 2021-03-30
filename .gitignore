@@ -13,6 +13,9 @@ logs/
 
 .DS_Store
 
+airflow.cfg
+unittests.cfg
+
 # Distribution / packaging
 .Python
 build/

@@ -1,5 +1,5 @@
 import pytest
-from airflow_jobs import DAG;
+from airflow import DAG;
 
 @pytest.fixture(scope='session')
 def test_dag_existance():

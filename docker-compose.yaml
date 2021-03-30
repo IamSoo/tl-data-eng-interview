@@ -35,6 +35,8 @@ services:
     environment:
       - LOAD_EX=n
       - EXECUTOR=Local
+    mem_limit: 2048m
+    mem_reservation: 128M
     logging:
       options:
         max-size: 10m

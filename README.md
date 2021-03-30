@@ -1,6 +1,6 @@
 ## The Challenge
 We need to download movies related data, do some transformation and insert the result into the db. Then any BI/analytics
-tool can extract those data to show it in beautiful charts. This should also be reproducible and automated. The problem that we are solving with
+tool can extract those data to show it in beautiful charts. This should also be reproducible and automated. The problem we are solving with
 this assignment are:  
 
 * Orchestration : *We need to run the job as a scheduled task, so a cron job or a tool with cron feature has to be used.*
@@ -19,7 +19,7 @@ Git: Source control to store our code https://git-scm.com/book/en/v2/Getting-Sta
 Python: A programming language, quite popular for data analytics https://www.python.org/downloads/
 
 ## Language Tools Used
-* Python 3.7 (Anaconda)
+* Python 3.7
 * Docker
 * Apache Airflow
 * Postgre
@@ -46,6 +46,12 @@ dependency. We also install another postgre to use it as our database.
 ### Steps to Run
 ```
 git clone git@github.com:IamSoo/tl-data-eng-interview.git
+
+-- This is for local airflow and test only
+pipenv shell
+pipenv sync --dev
+
+
 cd tl-data-eng-interview
 docker-compose up --build
 ```
@@ -87,6 +93,7 @@ I can find places which could have been done better.(The time is everything requ
 * A spark processing could be a better option once the file becomes bigger.
 * Hosted bigdata service like an EMR job could be directly initiated from airflow.
 * Services could be moved to K8 for better container management and orchestration.
+* More unit tests could have been added.
 
 
 
