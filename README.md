@@ -1,10 +1,10 @@
 ## The Challenge
-We need to download movies related data, do some transformation and insert the result into the db. Then any BI/analytics
-tool can extract those data to show it in beautiful charts. This should also be reproducible and automated. The problem we are solving with
+We need to download movies related data, do some transformations and insert the result into the db. Then any BI/analytics
+tool can extract those data and show it in beautiful charts. This should also be reproducible and automated. The problem we are solving with
 this assignment are:  
 
 * Orchestration : *We need to run the job as a scheduled task, so a cron job or a tool with cron feature has to be used.*
-* Transformation(Processing): *Data will be huge so good language with efficient libraries has to be used.*
+* Transformation(Processing): *Data will be huge so good language, a good tool with efficient libraries has to be used.*
 * Storage: *The dump and csv files are pretty big a good approach should be taken to store and process them .*
 
 ## The Design
@@ -74,11 +74,11 @@ As testings are the lines of defence for any application so we are splitting the
 
 ### Steps to run
 ```buildoutcfg
-cd tl-data-eng-interview
 pytest
 ```
 
 ## Verify
+After successful run of all the tasks data is inserted to a report table movie_report.
 Connect to the postgres db with user:postgres, password:postgres, db:postgres, port:5432 and query the report table. (This is for dev only  
 credentials will be never hardcoded or shared. Normally those are passed as environment parameters.)
 
@@ -88,12 +88,12 @@ select * from movie_report
 
  
  ## Areas of Improvement
-I can find places which could have been done better.(The time is everything required to achieve that).
+I can find places which could be done in a better way.(only little more time is everything required to achieve that).
 * Data could be downloaded to any cloud storage and and could have been splitted for processing instead of using a big file.
 * A spark processing could be a better option once the file becomes bigger.
 * Hosted bigdata service like an EMR job could be directly initiated from airflow.
 * Services could be moved to K8 for better container management and orchestration.
-* More unit tests could have been added.
+* More unit tests with fixures could have been added.
 
 
 
