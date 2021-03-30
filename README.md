@@ -61,6 +61,11 @@ cd tl-data-eng-interview
 docker-compose up --build
 ```
 
+To stop everything after run 
+```
+docker-compose down
+```
+
 Open up the url http://0.0.0.0:8080 in a browser. We can see an apache airflow web ui. The whole job is scheduled to run hourly
 but can be change accordingly. Click on the DAGs option to see configured DAGs.
 
