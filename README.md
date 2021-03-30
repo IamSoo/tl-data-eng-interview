@@ -54,6 +54,9 @@ git clone git@github.com:IamSoo/tl-data-eng-interview.git
 
 -- This is for local airflow and test only
 pipenv shell
+pip install \
+ apache-airflow==1.10.12 \
+ --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-1.10.12/constraints-3.8.txt"
 pipenv sync --dev
 
 
@@ -95,7 +98,7 @@ credentials will be never hardcoded or shared. Normally those are passed as envi
 ```buildoutcfg
 select * from movie_report
 ```
-
+Another approach would be to write a verification dag to verify each step. 
  
  ## Areas of Improvement
 I can find places which could be done in a better way.(only little more time is everything required to achieve that).

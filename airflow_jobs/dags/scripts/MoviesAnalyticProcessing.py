@@ -13,7 +13,7 @@ from .DbConnection import DbConnection
 reqd_col_list = ['id', 'title', 'budget', 'revenue', 'production_companies', 'release_date']
 
 # budget / revenue
-def calculateRatio(budget, revenue):
+def calculate_ratio(budget, revenue):
     if (revenue == 0 or budget == 0):
         return 0
     return float(budget) / float(revenue)
@@ -21,8 +21,8 @@ def calculateRatio(budget, revenue):
 
 # Movies meta got lot of garbages
 # Take only required column and do some clean up
-def cleanUpAndCreateMoviesDataFrame(movies_metadata, reqd_col_list):
-    mv_df = movies_metadata[reqd_col_list]
+def clean_up_and_create_movies_dataFrame(movies_metadata, l_reqd_col_list):
+    mv_df = movies_metadata[l_reqd_col_list]
     columns = ['revenue', 'budget']
     for col in columns:
         mv_df[col] = mv_df[col].apply(pd.to_numeric, errors='coerce')
@@ -35,14 +35,14 @@ def cleanUpAndCreateMoviesDataFrame(movies_metadata, reqd_col_list):
     return mv_df
 
 
-def updateReleaseDate(mv_df):
+def update_release_date(mv_df):
     mv_df.loc[:, 'release_date'] = mv_df['release_date'].apply(lambda x: str(x).split('-')[0])
     mv_df = mv_df.rename(columns={"release_date": "year"})
     return mv_df
 
 
 # Read the wiki dump that has been extracted in the previous job
-def extractWikiFilterdDump(filter_wiki_csv_file):
+def extract_wiki_filterd_dump(filter_wiki_csv_file):
     title_df = pd.read_csv(filter_wiki_csv_file)
     title_df = title_df.drop_duplicates(subset=['title'], keep='first')
     return title_df
@@ -50,23 +50,23 @@ def extractWikiFilterdDump(filter_wiki_csv_file):
 '''
 This is the final processing where we merge the filterd csv to movies metadata and finally
 save the data frame to db
-
 '''
-def process(*, filter_wiki_csv_file: str, movies_metadata_file: str, local_data_path: str, rpt_table_name: str):
 
-    #print('File path',local_data_path + movies_metadata_file)
+
+def process(*, filter_wiki_csv_file: str, movies_metadata_file: str, local_data_path: str, rpt_table_name: str):
     movies_metadata = pd.read_csv(local_data_path + movies_metadata_file, dtype='unicode')
-    mv_df = cleanUpAndCreateMoviesDataFrame(movies_metadata, reqd_col_list)
-    mv_df.loc[:, 'ratio'] = mv_df.apply(lambda x: calculateRatio(x['budget'], x['revenue']), axis=1)
+    mv_df = clean_up_and_create_movies_dataFrame(movies_metadata, reqd_col_list)
+    mv_df = update_release_date(mv_df)
+    mv_df.loc[:, 'ratio'] = mv_df.apply(lambda x: calculate_ratio(x['budget'], x['revenue']), axis=1)
     #Find the 1000 ratio rows
     merged_ratio_df = mv_df.nlargest(1000, 'ratio')
 
     #Extract the datafrom wiki dump
-    title_df = extractWikiFilterdDump(local_data_path + filter_wiki_csv_file)
+    title_df = extract_wiki_filterd_dump(local_data_path + filter_wiki_csv_file)
 
     #Merge based on title
     merged_df = pd.merge(merged_ratio_df, title_df, how='left', left_on='title', right_on='title')
 
     # Db connection object
     conn = DbConnection()
-    conn.saveDfToTable(merged_df, rpt_table_name)
+    conn.save_df_to_table(merged_df, rpt_table_name)

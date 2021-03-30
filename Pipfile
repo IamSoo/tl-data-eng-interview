@@ -9,7 +9,8 @@ numpy = "*"
 wget = "*"
 pytest = "*"
 pytest-helpers-namespace = "*"
-apache-airflow = "==1.10.9"
+apache-airflow = "==1.10.12"
+psycopg2 = "*"
 
 [dev-packages]
 

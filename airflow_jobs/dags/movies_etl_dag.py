@@ -45,12 +45,17 @@ with DAG(
     dummy_task_to_start = DummyOperator(
         task_id='dummy_task_to_start')
 
-    # 1. Download the movie dump from wiki
+    # 1. Ensure we start everything fresh
+    clean_up_task = BashOperator(
+        task_id='clean_up_task',
+        bash_command="cd /usr/local/app/data/ && rm -rf *")
+
+    # 2. Download the movie dump from wiki
     download_movie_dump_task = BashOperator(
         task_id='download_movie_dump_task',
         bash_command="wget -nv https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-abstract.xml.gz \-O /usr/local/app/data/enwiki-latest-abstract.xml.gz")
 
-    # 2. Convert movie dump to csv
+    # 3. Convert movie dump to csv
     convert_xml_to_csv = PythonOperator(
         python_callable=convert_xml_to_csv,
         task_id='convert_xml_to_csv',
@@ -60,7 +65,7 @@ with DAG(
             'local_data_path': DATA_DIR
         })
 
-    # 3. Process and insert the processed data to db
+    # 4. Process and insert the processed data to db
     do_final_process = PythonOperator(
         python_callable=process,
         task_id='do_final_process',
@@ -72,5 +77,4 @@ with DAG(
         }
     )
 
-dummy_task_to_start >> download_movie_dump_task >> convert_xml_to_csv >> \
-do_final_process
+dummy_task_to_start >> clean_up_task >> download_movie_dump_task >> convert_xml_to_csv >> do_final_process

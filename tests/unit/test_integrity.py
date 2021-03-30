@@ -5,7 +5,7 @@ import os
 import pytest
 from airflow.models import DAG
 
-DAG_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "..", "airflow_jobs/dags/*.py")
+DAG_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "..","..", "airflow_jobs/dags/*.py")
 DAG_FILES = glob.glob(DAG_PATH, recursive=True)
 
 
